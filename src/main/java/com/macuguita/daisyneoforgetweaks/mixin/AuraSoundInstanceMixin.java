@@ -25,22 +25,19 @@ package com.macuguita.daisyneoforgetweaks.mixin;
 import earth.terrarium.pastel.sound.AuraSoundInstance;
 import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.List;
 
 @Mixin(value = AuraSoundInstance.class, remap = false)
 public class AuraSoundInstanceMixin {
 
-    @Inject(
-            method = "floodTest",
-            at = @At("HEAD"),
-            cancellable = true,
-            remap = false
-    )
-    private static void daisy$disableFloodTest(BlockPos current, List<BlockPos> out, boolean sanitize, CallbackInfo ci) {
-        ci.cancel();
+    /**
+     * @author macuguita
+     * @reason crashes the client on daisy SMP
+     */
+    @Overwrite(remap = false)
+    public void floodTest(BlockPos current, List<BlockPos> out, boolean sanitize) {
+        return;
     }
 }
